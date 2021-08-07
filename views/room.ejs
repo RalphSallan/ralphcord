@@ -14,15 +14,24 @@
     <link href="/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="video-grid"></div>
-    <div id="mario-chat">
-        <div id="chat-window">
-            <div id="output"></div>
-            <div id="feedback"></div>
+    <div id="room-options">
+        <div id="id-box"></div>
+        <input id="roomIdCode" type="text" placeholder="Enter 8 character room ID" />
+        <button id="joinroom-button">Join Room</button>
+
+    </div>
+
+    <div id="chatting">
+        <div id="video-grid"></div>
+        <div id="mario-chat">
+            <div id="chat-window">
+                <div id="output"></div>
+                <div id="feedback"></div>
+            </div>
+            <input id="handle" type="text" placeholder="Handle" />
+            <input id="message" type="text" placeholder="Message" />
+            <button id="send">Send</button>
         </div>
-        <input id="handle" type="text" placeholder="Handle" />
-        <input id="message" type="text" placeholder="Message" />
-        <button id="send">Send</button>
     </div>
 </body>
 </html>

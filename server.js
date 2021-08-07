@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-    roomId = Math.floor(100000 + Math.random() * 900000);
+    roomId = makeid(8)
     res.redirect(`/${roomId}`);
 });
 
@@ -39,4 +39,18 @@ io.on('connection', function(socket){
         socket.broadcast.to(roomId).emit('erased');
     })
 
+    socket.on('pressed-join', function(){
+        //check to see if the room exists.
+        //if it exists, then allow the front end to connect
+    })
 });
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}

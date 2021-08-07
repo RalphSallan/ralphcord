@@ -14,6 +14,11 @@ var sendmessage = document.getElementById('send');
 var output = document.getElementById('output');
 var feedback = document.getElementById('feedback');
 var wind = document.getElementById('chat-window');
+var joinbtn = document.getElementById('joinroom-button');
+var roomIdCode = document.getElementById('roomIdCode');
+var idbox = document.getElementById('id-box');
+
+idbox.innerHTML = ROOM_ID;
 
 var peers = {};
 
@@ -67,7 +72,24 @@ sendmessage.addEventListener('click', function(){
     });
 
     message.value = '';
+});
 
+joinbtn.addEventListener('click', function(){
+    joinbtn.style.backgroundColor = '#575999';
+    setTimeout(function(){
+        joinbtn.style.backgroundColor = '#575ed8';
+    }, 70);
+
+    //socket.emit('pressed-join', roomIdCode.value);
+
+    //roomIdCode must be 8 characters long
+    if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
+        document.location.href = 'http://localhost:4000/' + roomIdCode.value;
+    }
+    else {
+        roomIdCode.value = "";
+        roomIdCode.placeholder = "room ID is 8 characters consisting of letters and numbers";
+    }
 });
 
 socket.on('chat', function(data){
@@ -106,3 +128,7 @@ function addVideoStream(video, stream) {
     })
     videoGrid.append(video);
 }
+
+function onlyLetters(code) {
+    return code.match("^[A-Za-z0-9]+$");
+  }
