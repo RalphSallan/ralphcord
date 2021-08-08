@@ -53,7 +53,7 @@ navigator.mediaDevices.getUserMedia({
 
     socket.on('user-connected', function(userId){
         joinsfx.play();
-        setTimeout(connectToNewUser, 300, userId, stream)
+        setTimeout(connectToNewUser, 800, userId, stream)
     });
 
     
