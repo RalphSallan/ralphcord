@@ -1,7 +1,7 @@
-var socket = io('/')
+var socket = io('https://ralphcord.herokuapp.com');
 var myPeer = new Peer(undefined, {
-    host: '/',
-    port: '4001'
+    host: 'my-peerjs-server-chat.herokuapp.com',
+    port: '443'
 });
 
 var videoGrid = document.getElementById('video-grid');
@@ -44,12 +44,18 @@ navigator.mediaDevices.getUserMedia({
         call.on('close', function() {
             video.remove();
         })
+
+        
+
     });
 
     socket.on('user-connected', function(userId){
         joinsfx.play();
         setTimeout(connectToNewUser, 300, userId, stream)
     });
+
+    
+
 });
 
 socket.on('user-disconnected', function(userId){
