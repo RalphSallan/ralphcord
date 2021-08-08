@@ -14,23 +14,38 @@
     <link href="/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="room-options">
-        <div id="id-box"></div>
-        <input id="roomIdCode" type="text" placeholder="Enter 8 character room ID" />
-        <button id="joinroom-button">Join Room</button>
+    
 
-    </div>
 
-    <div id="chatting">
-        <div id="video-grid"></div>
-        <div id="mario-chat">
-            <div id="chat-window">
-                <div id="output"></div>
-                <div id="feedback"></div>
+    <div id="container">
+        <div id="video-container">
+            <div id="video-grid"></div>
+        </div>
+
+        <div id="chat-container">
+            <div id="room-options">
+                <div id=roomIdtext>Your room ID:</div>
+                <div id="id-box"></div>
+                <div id="joinroom-group">
+                    <div id="roomIdCode-container">
+                        <input id="roomIdCode" type="text" placeholder="Enter 8 character room ID" />
+                    </div>
+                    <div id="joinroom-button-container">
+                        <button id="joinroom-button">Join Room</button>
+                    </div>
+                </div>
             </div>
-            <input id="handle" type="text" placeholder="Handle" />
-            <input id="message" type="text" placeholder="Message" />
-            <button id="send">Send</button>
+            <div id="chat-box">
+                <div id="chat-window">
+                    <div id="output"></div>
+                    <div id="feedback"></div>
+                </div>
+                <div id="message-options">
+                    <input id="handle" type="text" placeholder="Handle" />
+                    <input id="message" type="text" placeholder="Message" />
+                    <button id="send">Send</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

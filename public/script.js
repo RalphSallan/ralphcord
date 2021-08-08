@@ -30,10 +30,17 @@ navigator.mediaDevices.getUserMedia({
 
     myPeer.on('call', function(call) {
         call.answer(stream);
+        
+        peers[call.peer] = call;
+
         var video = document.createElement('video');
         call.on('stream', function(userVideoStream) {
             addVideoStream(video, userVideoStream);
         });
+
+        call.on('close', function() {
+            video.remove();
+        })
     });
 
     socket.on('user-connected', function(userId){
@@ -44,6 +51,7 @@ navigator.mediaDevices.getUserMedia({
 socket.on('user-disconnected', function(userId){
     if (peers[userId]) {
         peers[userId].close();
+        delete peers.userId;
     }
 });
 
@@ -59,11 +67,16 @@ message.addEventListener('keydown', function(e){
     if (e.key === 'Backspace'){
         socket.emit('erased', ROOM_ID);
     }
+    else if (e.key === 'Enter'){
+        setTimeout(function(){
+            socket.emit('erased', ROOM_ID);
+        }, 2);
+    }
 })
 sendmessage.addEventListener('click', function(){
-    sendmessage.style.backgroundColor = '#575999';
+    sendmessage.style.backgroundColor = '#171A53';
     setTimeout(function(){
-        sendmessage.style.backgroundColor = '#575ed8';
+        sendmessage.style.backgroundColor = '#292F95';
    }, 70);
 
     socket.emit('chat', ROOM_ID, {
@@ -74,10 +87,26 @@ sendmessage.addEventListener('click', function(){
     message.value = '';
 });
 
+message.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){
+        sendmessage.style.backgroundColor = '#171A53';
+        setTimeout(function(){
+            sendmessage.style.backgroundColor = '#292F95';
+        }, 70);
+
+        socket.emit('chat', ROOM_ID, {
+            message: message.value,
+            handle: handle.value
+        });
+
+        socket.emit('erased', ROOM_ID);
+    }
+});
+
 joinbtn.addEventListener('click', function(){
-    joinbtn.style.backgroundColor = '#575999';
+    joinbtn.style.backgroundColor = '#171A53';
     setTimeout(function(){
-        joinbtn.style.backgroundColor = '#575ed8';
+        joinbtn.style.backgroundColor = '#292F95';
     }, 70);
 
     //socket.emit('pressed-join', roomIdCode.value);
@@ -88,14 +117,34 @@ joinbtn.addEventListener('click', function(){
     }
     else {
         roomIdCode.value = "";
-        roomIdCode.placeholder = "room ID is 8 characters consisting of letters and numbers";
+        roomIdCode.placeholder = "room ID is 8 characters of letters and numbers";
+    }
+});
+
+roomIdCode.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){
+        joinbtn.style.backgroundColor = '#171A53';
+        setTimeout(function(){
+            joinbtn.style.backgroundColor = '#292F95';
+        }, 70);
+
+        //socket.emit('pressed-join', roomIdCode.value);
+
+        //roomIdCode must be 8 characters long
+        if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
+            document.location.href = 'http://localhost:4000/' + roomIdCode.value;
+        }
+        else {
+            roomIdCode.value = "";
+            roomIdCode.placeholder = "room ID is 8 characters of letters and numbers";
+        }
     }
 });
 
 socket.on('chat', function(data){
     output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>'
-    wind.scrollTop = wind.scrollHeight;
     feedback.innerHTML = '';
+    wind.scrollTop = wind.scrollHeight;
 });
 
 socket.on('typing', function(data){

@@ -1,18 +1,6 @@
-#video-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    grid-auto-rows: 300px;
-    background: grey;
-}
-
-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 body{
-    font-family: 'Nunito';
+    font-family: Tahoma, sans-serif;
+    background: #444660;
 }
 
 h2{
@@ -21,18 +9,68 @@ h2{
     color: #575ed8;
 }
 
-#mario-chat{
+#container{
+    display: flex;
+    background: #4D53C5;
+    border-radius: 25px 25px 25px 25px;
+}
+
+#video-container{
+    flex:1;
+    background: #444660;
+    border-radius: 25px;
+}
+
+#video-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-auto-rows: 300px;
+    background: #444660;
+    padding: 15px;
+    border-radius: 25px;
+}
+
+#roomIdtext{
+    font-size: 20px;
+    text-align: center;
+    display:grid;
+    width: 50%;
+    margin: 0 auto;
+    background: #4D53C5;
+    color: white;
+}
+
+#id-box{
+    font-size: 50px;
+    text-align: center;
+    text-decoration: underline;
+    display:grid;
+    width: 50%;
+    margin: 0 auto;
+    background: #4D53C5;
+    color: white;
+}
+
+#chat-container{
+    display:flex;
+    flex: 1;
+    flex-direction: column;
     max-width: 600px;
     margin: 30px auto;
-    border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-    border-radius: 2px;
+    border-radius: 25px;
+    background:#4D53C5;
+}
+
+#chat-box{
+    margin: 8px;
 }
 
 #chat-window{
-    height: 400px;
+    height: 600px;
     overflow: auto;
-    background: #f9f9f9;
+    background: #B7BAF0;
+    border-radius: 10px 10px 0 0;
 }
 
 #output p{
@@ -40,6 +78,15 @@ h2{
     margin: 0 20px;
     border-bottom: 1px solid #e9e9e9;
     color: #555;
+}
+
+#room-options{
+    background: #4D53C5;
+    margin: 10px;
+}
+
+#roomIdCode{
+    font-size:15px;
 }
 
 #feedback p{
@@ -52,31 +99,49 @@ h2{
     color: #575ed8;
 }
 
-label{
-    box-sizing: border-box;
-    display: block;
-    padding: 10px 20px;
+#joinroom-group{
+    display: flex;
+    padding: 15px;
+}
+
+#roomIdCode-container{
+    display:inline-block;
+    flex: 5;
+}
+
+#joinroom-button-container{
+    display:inline-block;
+    flex: 1;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px
 }
 
 input{
-    padding: 10px 20px;
+    float: left;
+    height: 30px;
+    width: 100%;
     box-sizing: border-box;
+    padding: 10px;
     background: #eee;
     border: 0;
-    display: block;
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #eee;
-    font-family: Nunito;
-    font-size: 16px;
+
 }
 
 button{
-    background: #575ed8;
+    float: left;
+    height: 30px;
+    /*box-sizing: border-box;*/
+    background: #292F95;
     color: #fff;
-    font-size: 18px;
     border: 0;
-    padding: 12px 0;
     width: 100%;
-    border-radius: 0 0 2px 2px;
+    border-radius: 5px
 }

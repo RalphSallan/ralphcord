@@ -9,7 +9,9 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-    roomId = makeid(8)
+    //make random id of length 8
+    const idlength = 8;
+    var roomId = makeid(idlength);
     res.redirect(`/${roomId}`);
 });
 
