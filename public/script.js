@@ -1,4 +1,6 @@
-var socket = io('https://ralphcord.herokuapp.com');
+var hosturl = 'https://ralphcord.herokuapp.com';
+
+var socket = io(hosturl);
 var myPeer = new Peer(undefined, {
     host: 'my-peerjs-server-chat.herokuapp.com',
     port: '443'
@@ -124,7 +126,7 @@ joinbtn.addEventListener('click', function(){
 
     //roomIdCode must be 8 characters long
     if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
-        document.location.href = 'http://localhost:4000/' + roomIdCode.value;
+        document.location.href = hosturl + '/' + roomIdCode.value;
     }
     else {
         roomIdCode.value = "";
