@@ -145,7 +145,7 @@ roomIdCode.addEventListener('keydown', function(e){
 
         //roomIdCode must be 8 characters long
         if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
-            document.location.href = 'http://localhost:4000/' + roomIdCode.value;
+            document.location.href = hosturl + '/' + roomIdCode.value;
         }
         else {
             roomIdCode.value = "";
