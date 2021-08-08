@@ -18,6 +18,9 @@ var joinbtn = document.getElementById('joinroom-button');
 var roomIdCode = document.getElementById('roomIdCode');
 var idbox = document.getElementById('id-box');
 
+var joinsfx = new Audio('joinsfx.wav');
+var leavesfx = new Audio('leavesfx.wav');
+
 idbox.innerHTML = ROOM_ID;
 
 var peers = {};
@@ -44,11 +47,13 @@ navigator.mediaDevices.getUserMedia({
     });
 
     socket.on('user-connected', function(userId){
-        setTimeout(connectToNewUser, 1000, userId, stream)
+        joinsfx.play();
+        setTimeout(connectToNewUser, 300, userId, stream)
     });
 });
 
 socket.on('user-disconnected', function(userId){
+    leavesfx.play();
     if (peers[userId]) {
         peers[userId].close();
         delete peers.userId;
