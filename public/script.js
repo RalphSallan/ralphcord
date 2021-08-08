@@ -1,4 +1,4 @@
-var socket = io('https://ralphcord.herokuapp.com');
+var socket = io('https://fierce-everglades-38200.herokuapp.com');
 var myPeer = new Peer(undefined, {
     host: 'my-peerjs-server-chat.herokuapp.com',
     port: '443'
