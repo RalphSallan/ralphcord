@@ -2,11 +2,18 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var cors = require('cors');
+
 
 server.listen(process.env.PORT || 4000);
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(
+    cors({
+        origin: '*'
+    })
+);
 
 app.get('/', function(req, res){
     //make random id of length 8

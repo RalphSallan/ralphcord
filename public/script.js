@@ -35,7 +35,7 @@ navigator.mediaDevices.getUserMedia({
 
     myPeer.on('call', function(call) {
         call.answer(stream);
-
+        
         peers[call.peer] = call;
 
         var video = document.createElement('video');
@@ -47,16 +47,13 @@ navigator.mediaDevices.getUserMedia({
             video.remove();
         })
 
-
-
     });
-
     socket.on('user-connected', function(userId){
         joinsfx.play();
         setTimeout(connectToNewUser, 1500, userId, stream)
     });
 
-
+    
 
 });
 
