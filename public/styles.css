@@ -1,6 +1,6 @@
 body{
     font-family: Tahoma, sans-serif;
-    background: #444660;
+    background: #4D53C5;
 }
 
 h2{
@@ -118,7 +118,9 @@ video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 15px
+    border-radius: 15px;
+    display: inline-block;
+    
 }
 
 input{
@@ -127,21 +129,35 @@ input{
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
-    background: #eee;
-    border: 0;
+    border: 5;
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #eee;
-
 }
 
 button{
     float: left;
     height: 30px;
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
     background: #292F95;
     color: #fff;
     border: 0;
     width: 100%;
-    border-radius: 5px
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#volume {
+    cursor: pointer;
+    width: 100%; /* Full-width */
+    height: 2px; /* Specified height */
+    background: #B7BAF0; /* Grey background */
+}
+
+#videobox {
+    margin-bottom: 30px;
+}
+
+#message {
+    visibility: hidden;
 }
