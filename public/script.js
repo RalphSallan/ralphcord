@@ -46,24 +46,26 @@ navigator.mediaDevices.getUserMedia({
     console.log(stream.getAudioTracks()[0].enabled);
 
     micbutton.addEventListener('click', function(){
+        pressbutton(micbutton);
         if (stream.getAudioTracks()[0].enabled){
             stream.getAudioTracks()[0].enabled = false;
-            micbutton.innerHTML = 'Mic is off';
+            micbutton.innerHTML = 'Mic is OFF';
         }
         else {
             stream.getAudioTracks()[0].enabled = true;
-            micbutton.innerHTML = 'Mic is on';
+            micbutton.innerHTML = 'Mic is ON';
         }
     });
 
     cambutton.addEventListener('click', function(){
+        pressbutton(cambutton);
         if (stream.getVideoTracks()[0].enabled){
             stream.getVideoTracks()[0].enabled = false;
-            cambutton.innerHTML = 'Cam is off';
+            cambutton.innerHTML = 'Camera is OFF';
         }
         else {
             stream.getVideoTracks()[0].enabled = true;
-            cambutton.innerHTML = 'Cam is on';
+            cambutton.innerHTML = 'Camera is ON';
         }
     });
 
@@ -142,9 +144,10 @@ message.addEventListener('keydown', function(e){
             socket.emit('erased', ROOM_ID);
         }, 2);
     }
-})
-sendmessage.addEventListener('click', function(){
+});
 
+sendmessage.addEventListener('click', function(){
+    pressbutton(sendmessage);
     if (!handle_chosen && handle.value != "") {
         handle.placeholder = handle.value;
         handle_chosen = true;
@@ -153,11 +156,6 @@ sendmessage.addEventListener('click', function(){
         sendmessage.innerHTML = "Send";
     }
     else if (handle_chosen) {
-        sendmessage.style.backgroundColor = '#171A53';
-        setTimeout(function(){
-            sendmessage.style.backgroundColor = '#292F95';
-    }, 70);
-
         socket.emit('chat', ROOM_ID, {
             message: message.value,
             handle: handle.value
@@ -169,10 +167,7 @@ sendmessage.addEventListener('click', function(){
 
 message.addEventListener('keydown', function(e){
     if (e.key === 'Enter'){
-        sendmessage.style.backgroundColor = '#171A53';
-        setTimeout(function(){
-            sendmessage.style.backgroundColor = '#292F95';
-        }, 70);
+        pressbutton(sendmessage);
 
         socket.emit('chat', ROOM_ID, {
             message: message.value,
@@ -185,12 +180,7 @@ message.addEventListener('keydown', function(e){
 });
 
 joinbtn.addEventListener('click', function(){
-    joinbtn.style.backgroundColor = '#171A53';
-    setTimeout(function(){
-        joinbtn.style.backgroundColor = '#292F95';
-    }, 70);
-
-    //socket.emit('pressed-join', roomIdCode.value);
+    pressbutton(joinbtn);
 
     //roomIdCode must be 8 characters long
     if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
@@ -204,10 +194,7 @@ joinbtn.addEventListener('click', function(){
 
 roomIdCode.addEventListener('keydown', function(e){
     if (e.key === 'Enter'){
-        joinbtn.style.backgroundColor = '#171A53';
-        setTimeout(function(){
-            joinbtn.style.backgroundColor = '#292F95';
-        }, 70);
+        pressbutton(joinbtn);
 
         //roomIdCode must be 8 characters long
         if (roomIdCode.value.length == 8 && onlyLetters(roomIdCode.value)){
@@ -304,4 +291,11 @@ function linkify(inputText) {
     replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
     return replacedText;
+}
+
+function pressbutton(button){
+    button.style.backgroundColor = '#171A53';
+        setTimeout(function(){
+            button.style.backgroundColor = '#292F95';
+        }, 70);
 }
