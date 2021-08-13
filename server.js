@@ -23,7 +23,14 @@ app.get('/', function(req, res){
 });
 
 app.get('/:room', function(req, res){
-    res.render('room', { roomID: req.params.room });
+    if (req.params.room.length == 8 && onlyLetters(req.params.room)){
+        res.render('room', { roomID: req.params.room });
+    }
+    
+    else {
+        res.sendStatus(404);
+    }
+    
 });
 
 io.on('connection', function(socket){
@@ -63,3 +70,7 @@ function makeid(length) {
     }
     return result;
 }
+
+function onlyLetters(code) {
+    return code.match("^[A-Za-z0-9]+$");
+  }

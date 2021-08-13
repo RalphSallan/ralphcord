@@ -161,3 +161,23 @@ button{
 #message {
     visibility: hidden;
 }
+
+#camera-options{
+    display: inline-block;
+    padding-top: 10px;
+    background: #4D53C5;
+    width: 100%;
+}
+
+#camera-button{
+    width:50%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+#mic-button{
+    width:50%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+

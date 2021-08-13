@@ -19,6 +19,8 @@ var wind = document.getElementById('chat-window');
 var joinbtn = document.getElementById('joinroom-button');
 var roomIdCode = document.getElementById('roomIdCode');
 var idbox = document.getElementById('id-box');
+var cambutton = document.getElementById('camera-button');
+var micbutton = document.getElementById('mic-button');
 
 var joinsfx = new Audio('joinsfx.wav');
 var leavesfx = new Audio('leavesfx.wav');
@@ -40,6 +42,30 @@ navigator.mediaDevices.getUserMedia({
     myVideobox.id = ('videobox');
 
     addVideoStream(myVideobox, stream);
+
+    console.log(stream.getAudioTracks()[0].enabled);
+
+    micbutton.addEventListener('click', function(){
+        if (stream.getAudioTracks()[0].enabled){
+            stream.getAudioTracks()[0].enabled = false;
+            micbutton.innerHTML = 'Mic is off';
+        }
+        else {
+            stream.getAudioTracks()[0].enabled = true;
+            micbutton.innerHTML = 'Mic is on';
+        }
+    });
+
+    cambutton.addEventListener('click', function(){
+        if (stream.getVideoTracks()[0].enabled){
+            stream.getVideoTracks()[0].enabled = false;
+            cambutton.innerHTML = 'Cam is off';
+        }
+        else {
+            stream.getVideoTracks()[0].enabled = true;
+            cambutton.innerHTML = 'Cam is on';
+        }
+    });
 
     myPeer.on('call', function(call) {
         call.answer(stream);
@@ -154,6 +180,7 @@ message.addEventListener('keydown', function(e){
         });
 
         socket.emit('erased', ROOM_ID);
+        message.value = '';
     }
 });
 
@@ -194,10 +221,9 @@ roomIdCode.addEventListener('keydown', function(e){
 });
 
 socket.on('chat', function(data){
-    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>'
+    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + linkify(data.message) + '</p>'
     feedback.innerHTML = '';
     wind.scrollTop = wind.scrollHeight;
-
     addnotif();
 });
 
@@ -260,4 +286,22 @@ function addnotif(){
         notifications += 1;
         document.title = `(${notifications}) ralphcord`;
     }
+}
+
+function linkify(inputText) {
+    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+    //Change email addresses to mailto:: links.
+    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+    return replacedText;
 }
