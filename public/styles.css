@@ -19,6 +19,8 @@ h2{
     flex:1;
     background: #444660;
     border-radius: 25px;
+    overflow: auto;
+    max-height: 811px;
 }
 
 #video-grid{
@@ -59,8 +61,8 @@ h2{
     margin: 30px auto;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
     border-radius: 25px;
-    background:#4D53C5;
-    overflow:auto;
+    background: #4D53C5;
+    overflow: auto;
     height: 790px;
 }
 
