@@ -47,6 +47,10 @@ io.on('connection', function(socket){
         io.to(roomId).emit('chat', data);
     });
 
+    socket.on('image', function(roomId, image){
+        io.to(roomId).emit('image', image);
+    })
+
     socket.on('typing', function(roomId, data){
         socket.broadcast.to(roomId).emit('typing', data);
     });

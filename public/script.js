@@ -6,6 +6,8 @@ var myPeer = new Peer(undefined, {
     port: '443'
 });
 
+var date = new Date();
+
 var videoGrid = document.getElementById('video-grid');
 var myVideo = document.createElement('video');
 myVideo.muted = true;
@@ -21,6 +23,8 @@ var roomIdCode = document.getElementById('roomIdCode');
 var idbox = document.getElementById('id-box');
 var cambutton = document.getElementById('camera-button');
 var micbutton = document.getElementById('mic-button');
+var imagebutton = document.getElementById('image-button');
+var actualimagebutton = document.getElementById('image');
 
 var joinsfx = new Audio('joinsfx.wav');
 var leavesfx = new Audio('leavesfx.wav');
@@ -42,8 +46,6 @@ navigator.mediaDevices.getUserMedia({
     myVideobox.id = ('videobox');
 
     addVideoStream(myVideobox, stream);
-
-    console.log(stream.getAudioTracks()[0].enabled);
 
     micbutton.addEventListener('click', function(){
         pressbutton(micbutton);
@@ -127,6 +129,7 @@ handle.addEventListener('keydown', function(e){
         handle_chosen = true;
         sendmessage.innerHTML = 'Send';
         message.style.visibility = 'visible';
+        /*imagebutton.style.visibility = 'visible';*/
         handle.disabled = true;
     }
 });
@@ -153,6 +156,7 @@ sendmessage.addEventListener('click', function(){
         handle_chosen = true;
         handle.disabled = true;
         message.style.visibility = 'visible';
+        /*imagebutton.style.visibility = 'visible'*/
         sendmessage.innerHTML = "Send";
     }
     else if (handle_chosen) {
@@ -177,6 +181,16 @@ message.addEventListener('keydown', function(e){
         socket.emit('erased', ROOM_ID);
         message.value = '';
     }
+});
+
+imagebutton.addEventListener('click', function(){
+    pressbutton(imagebutton);
+});
+
+actualimagebutton.addEventListener('change', function(event){
+    var image = new Image();
+    image.src = URL.createObjectURL(event.target.files[0]);
+    socket.emit('image', ROOM_ID, image);
 });
 
 joinbtn.addEventListener('click', function(){
@@ -208,10 +222,17 @@ roomIdCode.addEventListener('keydown', function(e){
 });
 
 socket.on('chat', function(data){
-    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + linkify(data.message) + '</p>'
+    output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + linkify(data.message) + '\t' + '<small style="font-size:12px;">' + date.getHours() + ':' + date.getMinutes() + '</small>' + '</p>';
+    
     feedback.innerHTML = '';
     wind.scrollTop = wind.scrollHeight;
     addnotif();
+});
+
+socket.on('image', function(image){
+    var nimage = new Image();
+    nimage.src = image;
+    output.append(nimage);
 });
 
 socket.on('typing', function(data){
